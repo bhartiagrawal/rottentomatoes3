@@ -25,14 +25,6 @@
             <gestureRecognizers/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <connections>
-                <outletCollection property="gestureRecognizers" destination="ThK-1h-knb" appends="YES" id="k2P-C9-IEa"/>
-            </connections>
         </view>
-        <tapGestureRecognizer id="ThK-1h-knb">
-            <connections>
-                <action selector="tapControl:" destination="-1" id="IlK-I0-aZ9"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
 </document>

@@ -18,8 +18,7 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
-
-- (IBAction)tapControl:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 
 @end
 
@@ -65,6 +64,18 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        if (connectionError){
+            //self.headerLabel.text = @"network error";
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+            label.text = @"network error";
+            label.backgroundColor = [UIColor clearColor];
+            [label sizeToFit];
+            
+            //could not get this to work.
+            //[self.tableView.viewForHeaderInSection label];
+        }
         id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         //NSLog(@"%@", object);
         self.movies = object[@"movies"];
@@ -135,11 +146,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"didSelectRowAtIndexPath: %d", indexPath.row); // you can see selected row number in your console;
-}
-
-- (IBAction)tapControl:(id)sender {
-    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
-    NSLog(@"tapControl: row %d", indexPath.row);
     
     NSDictionary *movie = self.movies[indexPath.row];
     NSString *movieUrl = movie[@"posters"][@"original"];
@@ -154,4 +160,5 @@
     
     [self.navigationController pushViewController:[[MovieDetailViewController alloc] init] animated:YES];
 }
+
 @end
